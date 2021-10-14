@@ -1,8 +1,12 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const { getToken } = require('./api/getToken');
+const multer = require('multer');
 
+const { getToken } = require('./api/getToken');
+const { uploadFile } = require('./api/uploadFile');
+
+const upload = multer();
 const PORT = 5001;
 const app = express();
 
@@ -12,6 +16,7 @@ app.use(cors());
 
 // API's
 app.get('/getToken', getToken);
+app.post('/uploadFile', upload.single('file'), uploadFile);
 
 app.listen(PORT, () => {
 	console.log(`Listening on port: ${PORT}`);
